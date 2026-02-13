@@ -1324,6 +1324,16 @@ document.getElementById("modalContent").innerHTML = `
 <span class="discount">₹${p.price}</span>
 <span class="old-price">₹${p.oldPrice}</span>
 </h3>
+<div class="quantity-box">
+<button onclick="changeQty(-1)">-</button>
+<span id="qtyValue">1</span>
+<button onclick="changeQty(1)">+</button>
+</div>
+
+<div class="modal-buttons">
+<button class="btn cart-btn" onclick="addToCart(${index})">Add to Cart</button>
+<button class="btn buy-btn" onclick="buyNow(${index})">Buy Now</button>
+</div>
 
 <p style="margin-top:15px;">${p.desc}</p>
 
@@ -1339,10 +1349,7 @@ document.getElementById("modalContent").innerHTML = `
 <h3 style="margin-top:20px;">Reviews</h3>
 ${reviews}
 
-<div class="modal-buttons">
-<button class="btn cart-btn" onclick="addToCart(${index})">Add to Cart</button>
-<button class="btn buy-btn" onclick="buyNow(${index})">Buy Now</button>
-</div>
+
 
 </div>
 `;
