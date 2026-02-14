@@ -831,6 +831,56 @@ font-size:13px;
 }
 
 
+.whatsapp-support{
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: linear-gradient(135deg, #f8f5ee, #e8f0e6);
+    color: #2f4f2f;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 22px;
+    border-radius: 60px;
+    cursor: pointer;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+    z-index: 5000;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 14px;
+    border: 1px solid rgba(47,79,47,0.15);
+}
+
+.whatsapp-support img{
+    width: 22px;
+}
+
+.whatsapp-support:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+    background: linear-gradient(135deg, #f1eee6, #dde8da);
+}
+
+
+
+
+
+@media(max-width:600px){
+    .whatsapp-support span{
+        display:none;
+    }
+
+    .whatsapp-support{
+        padding:15px;
+        border-radius:50%;
+    }
+}
+
+
+
+
+
+
 
 
 
@@ -998,6 +1048,13 @@ where every product feels fresh, safe, and made with love. 🌱
 <button class="checkout-btn" onclick="placeWhatsAppOrder()">Order on WhatsApp</button>
 
 </div>
+
+<div class="whatsapp-support" onclick="openWhatsAppSupport()">
+    <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
+    <span>Chat With Us</span>
+</div>
+
+
 
 <script>
 
@@ -1397,11 +1454,22 @@ card.classList.add("show");
 });
 });
 
+function openWhatsAppSupport(){
+    let message = "Hello 🌿 I need help regarding Green Glow Naturals products.";
+    let phone = "917901067932"; // your number without +
+    let url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
+    window.open(url, "_blank");
+}
+
 /* ================= INIT ================= */
 
 document.addEventListener("DOMContentLoaded",()=>{
 renderProducts();
 });
+
+
+
+
 
 </script>
 
