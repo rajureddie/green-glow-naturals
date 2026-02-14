@@ -876,6 +876,55 @@ font-size:13px;
     }
 }
 
+.floating-soap{
+    position: absolute;
+    font-size: 40px;
+    animation: floatSoap 6s ease-in-out infinite;
+    opacity: 0.8;
+    
+}
+
+/* Positions */
+
+.soap1{ top: 15%; left: 8%; animation-delay: 0s; }
+.soap2{ top: 70%; right: 10%; animation-delay: 2s; }
+.soap3{ top: 35%; right: 25%; animation-delay: 4s; }
+.soap4{ top: 55%; left: 45%; animation-delay: 1s; font-size: 30px; }
+
+
+/* Animation */
+
+@keyframes floatSoap{
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-25px) rotate(8deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+}
+
+@media(max-width:768px){
+
+    .floating-soap{
+        font-size: 28px;
+        opacity: 0.6;
+    }
+
+    .soap1{ top: 10%; left: 5%; }
+    .soap2{ top: 85%; right: 5%; }
+    .soap3{ top: 40%; right: 10%; }
+    .soap4{ top: 65%; left: 15%; }
+
+}
+.checkout-delivery{
+    display:flex;
+    justify-content:space-between;
+    margin-top:10px;
+    padding-top:10px;
+    border-top:1px solid #ddd;
+    font-weight:600;
+}
+
+
+
+
 
 
 
@@ -925,6 +974,12 @@ font-size:13px;
 <div class="floating-leaf leaf1">🌿</div>
 <div class="floating-leaf leaf2">🍃</div>
 <div class="floating-leaf leaf3">🌱</div>
+<div class="floating-soap soap4">🧼</div>
+<div class="floating-soap soap2">🫧</div>
+<div class="floating-soap soap3">🌸</div>
+<div class="floating-soap soap1">🧽</div>
+
+
 
 <h1 class="hero-title">100% Natural Handmade Soaps</h1>
 
@@ -1142,14 +1197,14 @@ images:["images/mangista1.jpeg","images/mangista2.jpeg"]
 
 {
 id:7,
-title:"Grape Bunch Soap",
+title:"Grape Bunch handwash Soap",
 price:150,
 oldPrice:180,
 skinType:"All Skin Types",
 desc:"Premium glycerine-based soap that moisturizes skin.",
 ingredients:"Glycerine, Essential Oil",
 reviews:["⭐️⭐️⭐️⭐️⭐️ Beautiful design!"],
-images:["images/grapebunch1.jpeg"]
+images:["images/grapebunch1.jpeg","images/grapebunch2.jpeg","images/grapebunch3.jpeg"]
 },
 
 {
@@ -1277,40 +1332,53 @@ updateCartCount();
 
 function renderCheckout(){
 
-let container = document.getElementById("checkoutItems");
-let total = 0;
-container.innerHTML = "";
+    let container = document.getElementById("checkoutItems");
+    let total = 0;
+    const deliveryFee = 100;
 
-cart.forEach((item,index)=>{
+    container.innerHTML = "";
 
-let subtotal = item.price * item.qty;
-total += subtotal;
+    cart.forEach((item,index)=>{
 
-container.innerHTML += `
-<div class="checkout-item">
+        let subtotal = item.price * item.qty;
+        total += subtotal;
 
-<div class="checkout-left">
-<strong>${item.title}</strong>
+        container.innerHTML += `
+        <div class="checkout-item">
 
-<div class="checkout-qty">
-<button onclick="changeCheckoutQty(${index},-1)">-</button>
-<span>${item.qty}</span>
-<button onclick="changeCheckoutQty(${index},1)">+</button>
-</div>
-</div>
+            <div class="checkout-left">
+                <strong>${item.title}</strong>
 
-<div class="checkout-right">
-<div class="checkout-price">₹${subtotal}</div>
-<button class="remove-btn" onclick="removeItem(${index})">🗑</button>
-</div>
+                <div class="checkout-qty">
+                    <button onclick="changeCheckoutQty(${index},-1)">-</button>
+                    <span>${item.qty}</span>
+                    <button onclick="changeCheckoutQty(${index},1)">+</button>
+                </div>
+            </div>
 
-</div>
-`;
+            <div class="checkout-right">
+                <div class="checkout-price">₹${subtotal}</div>
+                <button class="remove-btn" onclick="removeItem(${index})">🗑</button>
+            </div>
 
-});
+        </div>
+        `;
+    });
 
-document.getElementById("totalPrice").innerText = "Total: ₹" + total;
+    if(cart.length > 0){
+        total += deliveryFee;
+
+        container.innerHTML += `
+        <div class="checkout-delivery">
+            <strong>Delivery Fee</strong>
+            <span>₹${deliveryFee}</span>
+        </div>
+        `;
+    }
+
+    document.getElementById("totalPrice").innerText = "Total: ₹" + total;
 }
+
 
 /* ================= WHATSAPP ORDER ================= */
 
@@ -1323,6 +1391,8 @@ return;
 
 let message = "🧼 Green Glow Naturals Order\n\n";
 let total = 0;
+const deliveryFee = 100;
+
 
 cart.forEach(item => {
 
@@ -1333,7 +1403,13 @@ message += `• ${item.title} x ${item.qty} = ₹${subtotal}\n`;
 
 });
 
+if(cart.length > 0){
+    total += deliveryFee;
+    message += `Delivery Fee: ₹${deliveryFee}\n`;
+}
+
 message += `\nTotal: ₹${total}\n\nThank you 🌿`;
+
 
 let phone = "917901067932";
 
