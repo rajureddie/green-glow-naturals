@@ -455,11 +455,16 @@ display:none;
 }
 
 .image-scroll img{
-width:250px;
-border-radius:15px;
-scroll-snap-align:center;
-flex-shrink:0;
+    width: 100%;
+    max-width: 320px;   /* limits size on desktop */
+    aspect-ratio: 1 / 1; /* perfect square */
+    object-fit: cover;
+    border-radius: 15px;
+    scroll-snap-align: center;
+    flex-shrink: 0;
 }
+
+
 
 .arrow-btn{
 position:absolute;
@@ -937,8 +942,8 @@ where every product feels fresh, safe, and made with love. 🌱
 <div class="contact-card">
 <h3>Contact Information</h3>
 
-<p>📞 <strong>+91 XXXXX XX</strong></p>
-<p>📩 <strong>greenglownaturals@email.com</strong></p>
+<p>📞 <strong>+91 7901067932</strong></p>
+<p>📩 <strong>Greenglownaturals27@gmail.com</strong></p>
 <p>📍 Handmade with love in India</p>
 
 </div>
@@ -998,6 +1003,7 @@ where every product feels fresh, safe, and made with love. 🌱
 
 let cart = [];
 let currentQty = 1;
+let currentSlide = 0;
 
 /* ================= PRODUCTS (ARRAY VERSION) ================= */
 
@@ -1008,113 +1014,102 @@ const products = [
 {
 id:1,
 title:"Neem Herbal Soap",
-price:80,
-oldPrice:120,
-desc:"Helps reduce acne and purifies skin naturally.",
-ingredients:"Neem Extract, Coconut Oil, Aloe Vera, Olive Oil",
-reviews:["⭐️⭐️⭐️⭐️⭐️ Amazing!","⭐️⭐️⭐️⭐️ Very refreshing"],
-images:[
-"images/neem1.jpeg",
-"images/neem2.jpeg"
-]
+price:60,
+oldPrice:80,
+skinType:"All Skin Types",
+desc:"Made with natural ingredients. Helps with common skin problems.",
+ingredients:"Neem Extract, Aloe Vera Gel, Essential Oil",
+reviews:["⭐️⭐️⭐️⭐️⭐️ Very effective!"],
+images:["images/neem1.jpeg"]
 },
 
 {
 id:2,
 title:"Red Wine Soap",
-price:120,
-oldPrice:170,
-desc:"Helps in anti-aging and skin glow.",
-ingredients:"Red Wine Extract, Olive Oil, Vitamin E",
+price:80,
+oldPrice:110,
+skinType:"Dry Skin",
+desc:"Helps in anti-aging and even skin tone.",
+ingredients:"Red Wine Extract, Red Wine Powder, Essential Oil",
 reviews:["⭐️⭐️⭐️⭐️⭐️ Smooth & glowing skin!"],
-images:[
-"images/redwine1.jpeg",
-"images/redwine2.jpeg",
-"images/redwine3.jpeg"
-]
+images:["images/redwine1.jpeg"]
 },
 
 {
 id:3,
-title:"Papaya Glow Soap",
-price:100,
-oldPrice:150,
-desc:"Brightens dull skin and removes tan.",
-ingredients:"Papaya Extract, Coconut Oil",
+title:"Papaya Soap",
+price:70,
+oldPrice:100,
+skinType:"All Skin Types",
+desc:"Helps in skin brightening and reducing pigmentation.",
+ingredients:"Papaya Extract, Essential Oil",
 reviews:["⭐️⭐️⭐️⭐️ Fresh feeling!"],
-images:[
-"images/papaya1.jpeg",
-"images/papaya2.jpeg"
-]
+images:["images/papaya1.jpeg"]
 },
 
 {
 id:4,
-title:"Multhanmatti Soap",
-price:90,
-oldPrice:130,
+title:"Multhani Matti Soap",
+price:70,
+oldPrice:100,
+skinType:"Oily Skin",
 desc:"Controls oil and deeply cleanses skin.",
-ingredients:"Multani Mitti, Neem Oil",
-reviews:["⭐️⭐️⭐️⭐️ Very refreshing!"],
-images:[
-"images/multhanmatti1.jpeg"
-]
+ingredients:"Multhani Matti Powder, Orange Peel Powder, Essential Oil",
+reviews:["⭐️⭐️⭐️⭐️ Good for oily skin!"],
+images:["images/multhanmatti1.jpeg"]
 },
 
 {
 id:5,
-title:"Glycerine Flower Soap",
-price:110,
-oldPrice:160,
-desc:"Moisturizes and softens skin.",
-ingredients:"Glycerine Base, Natural Fragrance",
-reviews:["⭐️⭐️⭐️⭐️⭐️ Very soft texture!"],
-images:[
-"images/glycerine1.jpeg"
-]
+title:"Skin Allergy Care Soap",
+price:60,
+oldPrice:90,
+skinType:"Sensitive Skin",
+desc:"Soothes sensitive and allergy-prone skin naturally.",
+ingredients:"Kupintaku Powder, Neem, Tulasi, Essential Oil",
+reviews:["⭐️⭐️⭐️⭐️ Gentle & calming!"],
+images:["images/skinallergy1.jpeg"]
 },
 
 {
 id:6,
-title:"Grape Bunch Soap",
-price:130,
-oldPrice:180,
-desc:"Rich in antioxidants for glowing skin.",
-ingredients:"Grape Extract, Vitamin C",
-reviews:["⭐️⭐️⭐️⭐️ Unique design!"],
-images:[
-"images/grapebunch1.jpeg"
-]
+title:"Mangista Soap",
+price:80,
+oldPrice:110,
+skinType:"All Skin Types",
+desc:"Helps reduce blemishes and pigmentation irregularities.",
+ingredients:"Mangista Powder, Essential Oil",
+reviews:["⭐️⭐️⭐️⭐️ Herbal freshness!"],
+images:["images/mangista1.jpeg"]
 },
 
 {
 id:7,
-title:"Skin Allergy Care Soap",
-price:95,
-oldPrice:140,
-desc:"Soothes sensitive and irritated skin.",
-ingredients:"Herbal Blend, Aloe Vera",
-reviews:["⭐️⭐️⭐️⭐️ Gentle & calming!"],
-images:[
-"images/skinallergy1.jpeg"
-]
+title:"Grape Bunch Soap",
+price:150,
+oldPrice:180,
+skinType:"All Skin Types",
+desc:"Premium glycerine-based soap that moisturizes skin.",
+ingredients:"Glycerine, Essential Oil",
+reviews:["⭐️⭐️⭐️⭐️⭐️ Beautiful design!"],
+images:["images/grapebunch1.jpeg"]
 },
 
 {
 id:8,
-title:"Mangista Herbal Soap",
-price:105,
-oldPrice:150,
-desc:"Natural herbal cleansing soap.",
-ingredients:"Mangista Extract, Coconut Oil",
-reviews:["⭐️⭐️⭐️⭐️ Fresh herbal aroma!"],
-images:[
-"images/mangista1.jpeg",
-"images/mangista2.jpeg"
-]
+title:"Glycerine Soap",
+price:90,
+oldPrice:120,
+skinType:"Combination Skin",
+desc:"Maintains natural moisture balance and promotes smooth skin.",
+ingredients:"Glycerine Base, Essential Oil",
+reviews:["⭐️⭐️⭐️⭐️ Soft & smooth!"],
+images:["images/glycerine1.jpeg"]
 }
 
 ];
+
+
 
 
 
@@ -1283,7 +1278,7 @@ message += `• ${item.title} x ${item.qty} = ₹${subtotal}\n`;
 
 message += `\nTotal: ₹${total}\n\nThank you 🌿`;
 
-let phone = "916300670811";
+let phone = "917901067932";
 
 let url = "https://wa.me/" + phone + "?text=" + encodeURIComponent(message);
 
@@ -1323,6 +1318,8 @@ document.getElementById("modalContent").innerHTML = `
 <h3 style="margin-top:20px;">
 <span class="discount">₹${p.price}</span>
 <span class="old-price">₹${p.oldPrice}</span>
+<p><strong>Skin Type:</strong> ${p.skinType}</p>
+
 </h3>
 <div class="quantity-box">
 <button onclick="changeQty(-1)">-</button>
